@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+	http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://mybatis.org/schema/mybatis-spring
+  	http://mybatis.org/schema/mybatis-spring.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- mybatis注解扫描，定义Mapper Bean -->
+	<!-- 通过自动扫描注解的机制，每个dao接口定义bean -->
+	<mybatis:scan base-package="com.quanwc.blog.mapper" />
+
+
+	<!-- 数据库的相关配置 -->
+	<!-- 加载mysql.properties文件 -->	
+<!-- 	<util:properties id="mysql" location="classpath:mysql.properties"/> -->
+	<context:property-placeholder  location="classpath:mysql.properties"/>
+	
+	<!-- 定义连接池对象  -->
+	<bean id="dbcpDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driverName}"/>
+		<property name="url" value="${url}"/>
+		<property name="username" value="${user}"/>
+		<property name="password" value="${password}"/>
+	</bean>
+	
+	<!-- 配置session工厂 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 数据库连接信息 -->
+		<property name="dataSource" ref="dbcpDataSource"/>
+		<!-- MyBatis配置文件 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<!-- mapper映射文件所在位置，也就是SQL定义的XML -->
+		<property name="mapperLocations" value="classpath:mappers/*.xml"/>
+	</bean>
+
+	
+</beans>	

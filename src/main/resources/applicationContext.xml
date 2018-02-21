@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"  
+	xmlns:jee="http://www.springframework.org/schema/jee" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+		
+		
+		
+	<!--
+		访问静态资源 
+		mapping：映射，也就是对应的请求
+		location：本地资源路径，注意必须是webapp根目录下的路径。
+	-->
+<!--      <mvc:resources mapping="/images/**" location="/images/" /> -->
+<!--      <mvc:resources mapping="/js/**" location="/js/" /> -->
+<!-- 	 <mvc:resources mapping="/lib/**" location="/lib/" />  -->
+<!--      <mvc:resources mapping="/css/**" location="/css/" />	 -->
+<!--      <mvc:resources mapping="/layui/**" location="/layui/" />	 -->
+<!--      <mvc:resources mapping="/font-awesome/**" location="/font-awesome/" />	 -->
+  	
+  	
+  	<!-- freemarker的相关配置 -->
+	<!-- 配置freemarker信息 -->
+	<bean id="freemarker" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<!-- 配置freeMarker的模板路径 -->
+		<property name="templateLoaderPath" value="/view"/>		
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="defaultEncoding">utf8</prop>
+			</props>
+		</property>			
+	</bean>
+	
+	<!-- 配置一个FreeMarkerViewResolver -->
+	<bean id="freeMarkerViewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="order" value="1" />
+		<!-- 把spring的RequestContext对象暴露为变量request，用于页面获取项目名 -->
+		<property name="requestContextAttribute" value="request" />
+		<!-- 开启缓存，当再次请求时直接拿上次的结果，开发的时候先关闭 -->
+		<property name="cache" value="false" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".ftl" />
+		<!-- 设置返回内容的编码 -->
+		<property name="contentType" value="text/html; charset=utf-8" />
+	</bean>
+	
+	<!-- 
+		配置通用视图解析器viewResolver: 
+		InternalResourceViewResolver：这是一个最常用的解析器。通常使用它指定渲染对象为jsp页面
+	-->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="2"/>
+	</bean> 
+	
+	<!-- 配置json格式的viewResolver：将返回的内容转为json
+	-->
+	<bean id="jsonView"
+		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+	</bean>
+	
+	<!-- 内容协商视图处理，按照后缀名、参数、accept-header顺序匹配 -->
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="viewResolvers">
+			<!-- 在list里面可以配置多个ViewResolver -->
+			<list>
+				<!-- 配置freemark视图解析器 -->
+				<ref bean="freeMarkerViewResolver"/>
+				<!-- 配置通用视图解析器 -->
+			 	<ref bean="viewResolver"/>
+			</list>
+		</property>
+		<!-- 当上面的ViewResolver无法处理时，交给defaultViews处理 -->
+		<property name="defaultViews">
+			<list>
+				<ref bean="jsonView"/>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<!-- 数据库的相关配置 -->
+	<!-- 加载mysql.properties文件 -->
+	<util:properties id="mysql" location="classpath:mysql.properties"/>
+	
+	<!-- 定义连接池对象  -->
+	<bean id="dbcp" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="#{mysql.driverName}"/>
+		<property name="url" value="#{mysql.url}"/>
+		<property name="username" value="#{mysql.user}"/>
+		<property name="password" value="#{mysql.password}"/>
+	</bean>
+	
+	
+	<!-- 配置session工厂 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 数据库连接信息 -->
+		<property name="dataSource" ref="dbcp"/>
+		
+		<!-- SQL定义的XML 
+		<property name="mapperLocations" value="classpath:mappers/*.xml"/>-->
+	</bean>
+
+
+	<!-- 
+		配置MapperScannerConfigurer：
+		用Dao接口生成实现类对象： 
+	-->
+	<bean id="mapperScannerConfigurer"  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 自动扫描dao包下面的接口，并且实例化这些接口 -->
+		<property name="basePackage" value="com.quanwc.blog"/>
+	</bean>
+	
+	
+	
+	
+	
+	
+	
+	<!-- springmvc的相关配置 -->
+	<!-- 
+		开启组件扫描，扫描Controller，Service层组件 ：
+		 对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能
+	-->
+	<context:component-scan base-package="com.quanwc.blog"/>
+
+	<!-- 
+		SpringMVC注解配置:
+			通过该配置，可以使用@RequestMapping等注解，可以通过spring配置文件找到Controller
+	-->
+	<mvc:annotation-driven />
+	
+
+	
+</beans>

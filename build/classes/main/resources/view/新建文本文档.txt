@@ -1,0 +1,63 @@
+自成一体
+健康和水都喝多少分数低的话
+	三个月后再看中国数码文化（8175.HK），唯一电竞股盈利模式初现
+	
+	
+	巴菲特读书会
+	与其诅咒黑暗，不如点亮灯火——《约翰·邓普顿的投资之道》读书笔记①
+	
+	
+	
+	中国天使两会双创年度盛典
+	天使投资人，一直在路上的创业者
+	2017中国天使两会双创年度盛典将于1月14日在京盛大启幕
+	天使投资大咖组局两会双创，“创投界半壁江山”新年首聚
+	
+	
+		中国股神
+			哇哇哇哇哇哇哇哇哇哇哇哇哇
+		
+		格隆汇电台  18799  娃哈哈wajaja	
+			电台听风11：年终特辑——你所经历和期待的2015与2016
+			电台听风9：中港基金互认开闸，春天还会远么
+			格隆汇电台第3期：突发伪重磅的深港通大乌龙
+		格隆汇叶明	  yeming
+			赛伯乐国际控股（01020.HK）：大佬入主，资产注入，蜕变进行时	
+			鼎丰集团控股（06878.HK）：核心业务强劲增长，融资产业链再延伸
+			
+		启迪国际有限公司	
+			打造国内首个智能网联汽车孵化基地， 启迪国际构建汽车创新生态
+			与一汽集团及东风汽车集团就智能网联合作举行会议
+			
+			
+		白子画
+				 如何寻找下一个江南嘉捷？  //都无
+				《绝地求生大逃杀》被否，会带来多大影响。
+				 十年前的今天，iPhone降临人间
+		万二霓：
+				久盛地板、红星美凯龙联合发布“第三季爱木周实木宣言”
+				红星美凯龙等运营收入靠前 升级业态成房企商业管理主流
+				中国日益庞大的中产阶级，正在引领新一轮的消费升级
+			
+		金融圈地运动	
+					美股周报 | 加息大戏前美股面临大抉择 周五指数录三月最大升幅
+					A股晨报 | 农业股或将迎来机会 消费与影视传媒值得关注
+					投资日报| 金三胖发力沪指收复3500 世纪游轮第十六板
+			
+			
+			
+				// 根据postId 查出帖子内容
+//				PostContentRDO postContentRDO = postContentRService.getByPostId(postId);
+//				// 更新索引
+//				try {
+//					if(postContentRDO.getContent() != null){ // 只需修改内容
+//						post.setContent(postContentRDO.getContent());
+//					}
+//					String url = cfgBusiness.get(CfgBusiness.KEYS.SOLR_DOMAIN)
+//							+ "/solr/post/addIndex";
+//					PostIndexDTO postIndexDTO = PostUtil.postDTO2PostIndexDTO(post);
+//					searchIndexBusiness.solrPost(url, postIndexDTO);
+//				}
+//				catch (Exception e) {
+//					Log.error("create post index error, postId=" + postId + " error:", e);
+//				}

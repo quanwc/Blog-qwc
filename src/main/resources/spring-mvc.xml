@@ -1,0 +1,100 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+		
+  	
+  	<!-- 去扫描下面的包，找到对应的controller组件 -->
+	<context:component-scan base-package="com.quanwc.blog.web.controller" />
+  	
+  	<mvc:annotation-driven />
+  	
+
+  	<!-- 
+		访问静态资源 
+		mapping：映射，也就是对应的请求
+		location：本地资源路径，注意必须是webapp根目录下的路径。
+	-->
+    <mvc:resources mapping="/images/**" location="/images/" />
+    <mvc:resources mapping="/js/**" location="/js/" />
+ 	<mvc:resources mapping="/lib/**" location="/lib/" /> 
+    <mvc:resources mapping="/css/**" location="/css/" />	
+    <mvc:resources mapping="/layui/**" location="/layui/" />	
+    <mvc:resources mapping="/font-awesome/**" location="/font-awesome/" />	
+    <!--  -->
+    <mvc:resources mapping="/admin/backend/**" location="/backend/" />	
+  	
+  	
+  	<!-- freemarker的相关配置 -->
+	<!-- 配置freemarker信息 -->
+	<bean id="freemarker" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<!-- 配置freeMarker的模板路径 -->
+		<property name="templateLoaderPath" value="/view"/>		
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="defaultEncoding">utf8</prop>
+			</props>
+		</property>			
+	</bean>
+	
+	<!-- 配置一个FreeMarkerViewResolver -->
+	<bean id="freeMarkerViewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="order" value="1" />
+		<!-- 把spring的RequestContext对象暴露为变量request，用于页面获取项目名 -->
+		<property name="requestContextAttribute" value="request" />
+		<!-- 开启缓存，当再次请求时直接拿上次的结果，开发的时候先关闭 -->
+		<property name="cache" value="false" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".ftl" />
+		<!-- 设置返回内容的编码 -->
+		<property name="contentType" value="text/html; charset=utf-8" />
+	</bean>
+	
+	<!-- 
+		配置通用视图解析器viewResolver: 
+		InternalResourceViewResolver：这是一个最常用的解析器。通常使用它指定渲染对象为jsp页面
+	-->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="2"/>
+	</bean> 
+	
+	<!-- 配置json格式的viewResolver：将返回的内容转为json
+	-->
+	<bean id="jsonView"
+		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+	</bean>
+	
+	<!-- 内容协商视图处理，按照后缀名、参数、accept-header顺序匹配 -->
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="viewResolvers">
+			<!-- 在list里面可以配置多个ViewResolver -->
+			<list>
+				<!-- 配置freemark视图解析器 -->
+				<ref bean="freeMarkerViewResolver"/>
+				<!-- 配置通用视图解析器 -->
+			 	<ref bean="viewResolver"/>
+			</list>
+		</property>
+		<!-- 当上面的ViewResolver无法处理时，交给defaultViews处理 -->
+		<property name="defaultViews">
+			<list>
+				<ref bean="jsonView"/>
+			</list>
+		</property>
+	</bean>
+	
+	
+</beans>
