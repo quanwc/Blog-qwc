@@ -1,6 +1,6 @@
 
 
-# Java Blog
+Java Blog
 	开始有这个想法是在2017-12月底左右，是听林潇大佬给的建议。目的是为了学习，了解软件的完整开发流程。
 	自己的动手能力一直很欠缺，那么这次是个锻炼的机会，虽然是个练习的博客Demo，会添加以前听过但没用过的技术，从简单做起，直到上线。目的在于提高解决问题能力，增加对知识理解。
 	
@@ -27,7 +27,7 @@
 		include：加载前台、后台页面的公共部分，包括header、footer等部分
 		view目录下的其它文件，是前台页面
 		
-##项目简介：
+项目简介：
 -- maven构建项目，管理jar包
 -- bootstrap前端框架，完成页面的样式渲染
 -- Editor.md作在线 Markdown 编辑器：https://pandao.github.io/editor.md/
@@ -69,8 +69,8 @@
 -- 什么事情都是有方法的，硬来是不行的，需多总结，多学习
 
 
-##联系方式：
-	邮箱：quan_wc@163.com
-	博客：http://www.cnblogs.com/quan-coder
-	github：https://github.com/quanwc
+联系方式： <br/>
+	邮箱：quan_wc@163.com <br/>
+	博客：http://www.cnblogs.com/quan-coder <br/>
+	github：https://github.com/quanwc <br/>
 	
