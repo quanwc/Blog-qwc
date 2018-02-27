@@ -30,8 +30,14 @@
     <mvc:resources mapping="/css/**" location="/css/" />	
     <mvc:resources mapping="/layui/**" location="/layui/" />	
     <mvc:resources mapping="/font-awesome/**" location="/font-awesome/" />	
-    <!--  -->
+    <!-- 过滤后端的静态资源请求 -->
     <mvc:resources mapping="/admin/backend/**" location="/backend/" />	
+<!--     <mvc:resources mapping="/admin/backend/editormd/**" location="/backend/editormd/" /> -->
+<!--     <mvc:resources mapping="/admin/backend/js/**" location="/backend/js" /> -->
+<!--     <mvc:resources mapping="/admin/backend/lib/Hui-iconfont/1.0.8/**" location="/backend/lib/Hui-iconfont/1.0.8/" /> -->
+<!--     <mvc:resources mapping="/admin/backend/lib/jquery/1.9.1/**" location="/backend/lib/jquery/1.9.1/" /> -->
+<!--     <mvc:resources mapping="/admin/backend/lib/layer/2.4/**" location="/backend/lib/layer/2.4/" /> -->
+    	
   	
   	
   	<!-- freemarker的相关配置 -->
@@ -51,7 +57,7 @@
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<property name="order" value="1" />
 		<!-- 把spring的RequestContext对象暴露为变量request，用于页面获取项目名 -->
-		<property name="requestContextAttribute" value="request" />
+		<property name="requestContextAttribute" value="request1" />
 		<!-- 开启缓存，当再次请求时直接拿上次的结果，开发的时候先关闭 -->
 		<property name="cache" value="false" />
 		<property name="prefix" value="" />

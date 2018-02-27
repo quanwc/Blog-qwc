@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanwc.blog.mapper.BlogMapper">
+<!-- com.xiaol.blog.mapper.BlogMapper -->
+	<!-- 不配置，默认使用MyBatis的二级缓存，则实体类需要实现序列化 -->
+	<cache />
+
+	<sql id="Base_Column">
+		`id`, `title`, `author`, `md`, `html`, `create_timestamp`, `update_timestamp`
+	</sql>
+	
+	<!-- 根据id查找博客 -->
+	<select id="findBlogById" parameterType="int">
+		select 
+			* 
+		where blog_id=#{id} 
+	</select>
+	
+	<insert id="saveBlog" parameterType="com.quanwc.blog.entity.Blog">
+		insert into blog(
+			title, author, md, html, create_timestamp, update_timestamp
+		)values(
+			#{title, jdbcType=VARCHAR},
+			#{author, jdbcType=VARCHAR},
+			#{md, jdbcType=VARCHAR},
+			#{html, jdbcType=VARCHAR},
+			#{createTimestamp, jdbcType=INTEGER},
+			#{updateTimestamp, jdbcType=INTEGER}
+		)
+	</insert>
+	
+</mapper>

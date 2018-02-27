@@ -1,15 +1,13 @@
 <!--_menu 作为公共模版分离出去-->
 <aside class="Hui-aside">
-	
 	<div class="menu_dropdown bk_2">
 		<dl id="menu-article">
 			<dt><i class="Hui-iconfont">&#xe616;</i> 博客管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<!-- <li><a href="admin/blogAdd" title="新增博客">新增博客</a></li> -->
-					<li><a href="blogAdd" title="新增博客">新增博客</a></li>
-					<!-- <li><a href="admin/blogList" title="博客列表">博客列表</a></li> -->
-					<li><a href="blogList" title="博客列表">博客列表</a></li>
+					<!-- <li><a href="blogAdd" title="新增博客">新增博客</a></li> -->
+					<li><a href="${ctx}/admin/blogAddView" title="新增博客">新增博客</a></li>
+					<li><a href="${ctx}/admin/blogList" title="博客列表">博客列表</a></li>
 				</ul>
 			</dd>
 		</dl>

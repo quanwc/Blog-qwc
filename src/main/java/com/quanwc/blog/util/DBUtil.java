@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class DBUtil {
 	
 	private static final String driver = "com.mysql.jdbc.Driver";
-	private static final String url = "jdbc:mysql://172.18.1.247:3306/blog-lin?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull&amp;allowMultiQueries=true";
+	private static final String url = "jdbc:mysql://172.18.1.247:3306/blog-qwc?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull&amp;allowMultiQueries=true";
 	private static final String user = "glh";
 	private static final String password = "Cqmyg12321";
 	

@@ -91,17 +91,17 @@
 </section>
 
 <!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="backend/lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="backend/lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="backend/static/h-ui/js/H-ui.js"></script>
-<script type="text/javascript" src="backend/static/h-ui.admin/js/H-ui.admin.page.js"></script>
+<script type="text/javascript" src="backend/js/jquery.min.js"></script>
+<script type="text/javascript" src="backend/js/layer.js"></script>
+<script type="text/javascript" src="backend/js/H-ui.js"></script>
+<script type="text/javascript" src="backend/js/H-ui.admin.page.js"></script>
 <!--/_footer /作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
 <!--
-<script type="text/javascript" src="backend/lib/My97DatePicker/4.8/WdatePicker.js"></script>
-<script type="text/javascript" src="backend/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="backend/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="backend/js/WdatePicker.js"></script>
+<script type="text/javascript" src="backend/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="backend/js/laypage.js"></script>
 -->
 <!--
 <script type="text/javascript">

@@ -18,3 +18,9 @@
 	</div>
 </header>
 <!--/_header 作为公共模版分离出去-->
+
+	<!-- 
+		定义变量ctx：获取项目名，方便其他页面使用
+		因为每个页面都会引用该admin_header.ftl，所以说，只要引用了的页面都可以拿到该变量 
+	-->
+	<#assign ctx = request1.contextPath />
