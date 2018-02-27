@@ -25,7 +25,8 @@
 		admin：后台管理的页面
 		include：加载前台、后台页面的公共部分，包括header、footer等部分
 		view目录下的其它文件，是前台页面
-		
+	
+	
 ##项目简介：
 -- maven构建项目，管理jar包
 -- bootstrap前端框架，完成页面的样式渲染
