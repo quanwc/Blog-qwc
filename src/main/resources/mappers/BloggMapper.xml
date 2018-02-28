@@ -3,9 +3,19 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.quanwc.blog.mapper.BlogMapper">
-<!-- com.xiaol.blog.mapper.BlogMapper -->
+
 	<!-- 不配置，默认使用MyBatis的二级缓存，则实体类需要实现序列化 -->
-	<cache />
+<!-- 	<cache /> 加上该配置，会报错，实体类需要实现序列化才可以 -->
+
+	<resultMap id="baseResultMap" type="com.quanwc.blog.entity.Blog">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="author" column="author" />
+		<result property="md" column="md" />
+		<result property="html" column="html" />
+		<result property="createTimestamp" column="create_timestamp" />
+		<result property="updateTimestamp" column="update_timestamp" />
+	</resultMap>
 
 	<sql id="Base_Column">
 		`id`, `title`, `author`, `md`, `html`, `create_timestamp`, `update_timestamp`
@@ -14,10 +24,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 根据id查找博客 -->
 	<select id="findBlogById" parameterType="int">
 		select 
-			* 
+			<include refid="Base_Column" /> 
+		from 
+			blog
 		where blog_id=#{id} 
 	</select>
 	
+	<!-- 查询所有博客 -->
+	<select id="listBlogs" resultMap="baseResultMap">
+		select 
+			<include refid="Base_Column" />
+		from 
+			blog
+	</select>
+	
+	<!-- 新增博客 -->
 	<insert id="saveBlog" parameterType="com.quanwc.blog.entity.Blog">
 		insert into blog(
 			title, author, md, html, create_timestamp, update_timestamp
@@ -26,8 +47,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{author, jdbcType=VARCHAR},
 			#{md, jdbcType=VARCHAR},
 			#{html, jdbcType=VARCHAR},
-			#{createTimestamp, jdbcType=INTEGER},
-			#{updateTimestamp, jdbcType=INTEGER}
+			#{createTimestamp, jdbcType=TIMESTAMP},
+			#{updateTimestamp, jdbcType=TIMESTAMP}
 		)
 	</insert>
 	
