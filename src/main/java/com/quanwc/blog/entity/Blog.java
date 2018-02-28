@@ -1,4 +1,8 @@
 package com.quanwc.blog.entity;
+
+import java.util.Date;
+
+
 /**
  * Blog对应的实体类
  * @author 全文超
@@ -17,9 +21,9 @@ public class Blog {
 	/** html */
 	private String html;
 	/** 创建时间  */
-	private Long createTimestamp;
+	private Date createTimestamp;
 	/** 修改时间 */
-	private Long updateTimestamp;
+	private Date updateTimestamp;
 	
 	public Integer getId() {
 		return id;
@@ -51,16 +55,16 @@ public class Blog {
 	public void setHtml(String html) {
 		this.html = html;
 	}
-	public Long getCreateTimestamp() {
+	public Date getCreateTimestamp() {
 		return createTimestamp;
 	}
-	public void setCreateTimestamp(Long createTimestamp) {
+	public void setCreateTimestamp(Date createTimestamp) {
 		this.createTimestamp = createTimestamp;
 	}
-	public Long getUpdateTimestamp() {
+	public Date getUpdateTimestamp() {
 		return updateTimestamp;
 	}
-	public void setUpdateTimestamp(Long updateTimestamp) {
+	public void setUpdateTimestamp(Date updateTimestamp) {
 		this.updateTimestamp = updateTimestamp;
 	}
 	

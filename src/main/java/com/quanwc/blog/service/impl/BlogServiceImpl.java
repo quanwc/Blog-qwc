@@ -1,5 +1,6 @@
 package com.quanwc.blog.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,8 @@ public class BlogServiceImpl implements BlogService{
 	 */
 	@Override
 	public List<Blog> listBlogs() {
-		return blogMapper.listBlogs();
+		List<Blog> list = blogMapper.listBlogs();
+		return  list;
 	}
 
 	/**
@@ -47,9 +49,9 @@ public class BlogServiceImpl implements BlogService{
 			return -1;
 		}
 		blog.setAuthor("admin");
-		blog.setCreateTimestamp(System.currentTimeMillis());
-		blog.setUpdateTimestamp(System.currentTimeMillis());
-		System.out.println("html: " + blog.getHtml());
+		Date date = new Date();
+		blog.setCreateTimestamp(date);
+		blog.setUpdateTimestamp(date);
 		return blogMapper.saveBlog(blog);
 	}
 

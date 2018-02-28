@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -58,13 +59,14 @@ public class AdminController {
 	
 	/**
 	 * 博客列表
+	 * @param map 
 	 * @return
 	 */
 	@RequestMapping(path = {"/blogList"}, method = RequestMethod.GET)
-	public String blogList() {
-		System.out.println("admin blogList");
+	public String blogList(ModelMap map) {
 		List<Blog> blogList = blogService.listBlogs();
 		System.out.println(blogList.toString());
+		map.put("blogList", blogList);
 		return "admin/blog_list";
 	}
 	
