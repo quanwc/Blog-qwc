@@ -3,6 +3,7 @@
 <head>
 	<#include "/include/admin_script_head.ftl">
 </head>
+
 <body>
 
 <!-- 加载头部导航栏 -->
@@ -22,13 +23,6 @@
 	<div class="Hui-article">
 		<article class="cl pd-20">
 			<div class="text-c">
-				<span class="select-box inline">
-				<select name="" class="select">
-					<option value="0">全部分类</option>
-					<option value="1">分类一</option>
-					<option value="2">分类二</option>
-				</select>
-				</span>
 				日期范围：
 				<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">
 				-
@@ -38,18 +32,18 @@
 			</div>
 			<div class="cl pd-5 bg-1 bk-gray mt-20">
 				<span class="l">
-				<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-				<a class="btn btn-primary radius" data-title="添加博客" _href="article-add.html" onclick="article_add('添加博客','blog_add.ftl')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加博客</a>
+				<a id="batchDelBtn" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+				<a class="btn btn-primary radius" data-title="添加博客" href="${ctx}/admin/blogAddViewFtl"><i class="Hui-iconfont">&#xe600;</i> 添加博客</a>
 				</span>
-				<span class="r">共有数据：<strong>54</strong> 条</span>
+				<span class="r">共有数据：<strong>54</strong> 条</span>   
 			</div>
 			
 			<div class="mt-20">
 				<#if blogList??>
-					<table class="table table-border table-bordered table-bg table-hover table-sort">
+					<table id="blogListTable" class="table table-border table-bordered table-bg table-hover table-sort">
 						<thead>
 							<tr class="text-c">
-								<th width="25"><input type="checkbox" name="" value=""></th>
+								<th width="25"></th>
 								<th width="80">ID</th>
 								<th width="200">标题</th>
 								<th width="80">作者</th>
@@ -57,13 +51,14 @@
 								<th width="75">html</th>
 								<th width="60">创建时间</th>
 								<th width="120">修改时间</th>
+								<th width="120">修改内容</th>
 							</tr>
 						</thead>
 						
-					<#list blogList as blog>
 						<tbody>
+						<#list blogList as blog>
 							<tr class="text-c">
-								<td><input type="checkbox" value="" name=""></td>
+								<td><input onclick="tbodyAddCheckedOpt(this)" type="checkbox" value="" name=""></td>
 								<td>${blog.id}</td>
 								<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="article_edit('查看','article-zhang.html','10001')" title="查看">${blog.title}</u></td>
 								<td>${blog.author}</td>
@@ -71,6 +66,9 @@
 								<td>${blog.html}</td>
 								<td>${blog.createTimestamp?string('dd.MM.yyyy HH:mm:ss')}</td>
 								<td>${blog.updateTimestamp?datetime}</td>
+								<!--<td><a href="${ctx}/admin/blogUpdateViewFtl?id=${blog.id}">修改</a></td>-->
+								<!--<td><a href="${ctx}/admin/blogUpdateViewFtl/${blog.id}">修改</a></td>-->
+								<td><a style="color:#C71585" onclick="blogUpdateViewFtl(${blog.id})">修改</a></td>
 							</tr>
 						</#list>
 						</tbody>
@@ -85,113 +83,19 @@
 	</div>
 </section>
 
-<!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="backend/js/jquery.min.js"></script>
+<!--
+	在线引用cdn加速网站的jquery.json.min.js
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery-json/2.5.1/jquery.json.min.js"></script>
+-->	
+<script type="text/javascript" src="backend/js/jquery.json.min.js"></script>
 <script type="text/javascript" src="backend/js/layer.js"></script>
 <script type="text/javascript" src="backend/js/H-ui.js"></script>
 <script type="text/javascript" src="backend/js/H-ui.admin.page.js"></script>
-<!--/_footer /作为公共模版分离出去-->
 
-<!--请在下方写此页面业务相关的脚本-->
-<!--
-<script type="text/javascript" src="backend/js/WdatePicker.js"></script>
-<script type="text/javascript" src="backend/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="backend/js/laypage.js"></script>
--->
-<!--
-<script type="text/javascript">
-$('.table-sort').dataTable({
-	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-	"bStateSave": true,//状态保存
-	"aoColumnDefs": [
-		//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-		{"orderable":false,"aTargets":[0,8]}// 不参与排序的列
-	]
-});
--->
+<!-- 引用blog.js -->
+<script type="text/javascript" src="backend/js/blog.js"></script>
 
-/*资讯-添加*/
-function article_add(title,url,w,h){
-	var index = layer.open({
-		type: 2,
-		title: title,
-		content: url
-	});
-	layer.full(index);
-}
-/*资讯-编辑*/
-function article_edit(title,url,id,w,h){
-	var index = layer.open({
-		type: 2,
-		title: title,
-		content: url
-	});
-	layer.full(index);
-}
-/*资讯-删除*/
-function article_del(obj,id){
-	layer.confirm('确认要删除吗？',function(index){
-		$.ajax({
-			type: 'POST',
-			url: '',
-			dataType: 'json',
-			success: function(data){
-				$(obj).parents("tr").remove();
-				layer.msg('已删除!',{icon:1,time:1000});
-			},
-			error:function(data) {
-				console.log(data.msg);
-			},
-		});		
-	});
-}
 
-/*资讯-审核*/
-function article_shenhe(obj,id){
-	layer.confirm('审核文章？', {
-		btn: ['通过','不通过','取消'], 
-		shade: false,
-		closeBtn: 0
-	},
-	function(){
-		$(obj).parents("tr").find(".td-manage").prepend('<a class="c-primary" onClick="article_start(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
-		$(obj).remove();
-		layer.msg('已发布', {icon:6,time:1000});
-	},
-	function(){
-		$(obj).parents("tr").find(".td-manage").prepend('<a class="c-primary" onClick="article_shenqing(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-danger radius">未通过</span>');
-		$(obj).remove();
-    	layer.msg('未通过', {icon:5,time:1000});
-	});	
-}
-/*资讯-下架*/
-function article_stop(obj,id){
-	layer.confirm('确认要下架吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="article_start(this,id)" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已下架</span>');
-		$(obj).remove();
-		layer.msg('已下架!',{icon: 5,time:1000});
-	});
-}
 
-/*资讯-发布*/
-function article_start(obj,id){
-	layer.confirm('确认要发布吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="article_stop(this,id)" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
-		$(obj).remove();
-		layer.msg('已发布!',{icon: 6,time:1000});
-	});
-}
-/*资讯-申请上线*/
-function article_shenqing(obj,id){
-	$(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">待审核</span>');
-	$(obj).parents("tr").find(".td-manage").html("");
-	layer.msg('已提交申请，耐心等待审核!', {icon: 1,time:2000});
-}
-</script>
-<!--/请在上方写此页面业务相关的脚本-->
-</body>
 </html>

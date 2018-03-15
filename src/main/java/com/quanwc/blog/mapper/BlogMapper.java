@@ -2,6 +2,7 @@ package com.quanwc.blog.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.quanwc.blog.entity.Blog;
@@ -24,9 +25,9 @@ public interface BlogMapper {
 	// 新增博客
 	int saveBlog(Blog blog);
 	
-	// 删除博客
-	int removeBlog(Integer id);
+	// 批量删除博客
+	int removeBlogBatch(@Param("arrIds2") Integer[] ids);
 	
 	// 修改博客
-	int updateBlog(Blog blog);
+	int updateBlog(@Param("blog") Blog blog);
 }

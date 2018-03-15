@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/layer.js"></script>
+</head>
+
+<body>
+  <div id="btn">
+    12323
+  </div>
+
+</body>
+<script>
+layer.confirm('确定删除吗?', {icon: 3, title:'提示'}, function(index){
+	  //do something
+	  alert("1.51.51.5");
+//	  layer.close(index);
+	});
+  $('#btn').on('click', function () {
+    layer.confirm('is not?', {
+      icon: 3,
+      title: '提示'
+    }, function (index) {
+
+    });
+  })
+</script>
+
+</html>

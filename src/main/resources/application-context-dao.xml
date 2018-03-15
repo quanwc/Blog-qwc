@@ -41,6 +41,18 @@
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<!-- mapper映射文件所在位置，也就是SQL定义的XML -->
 		<property name="mapperLocations" value="classpath:mappers/*.xml"/>
+		
+		<!-- 配置mybatis分页插件PageHelper -->
+	    <property name="plugins">
+		    <array>
+		      <bean class="com.github.pagehelper.PageInterceptor">
+		        <property name="properties">
+		          <value>
+		          </value>
+		        </property>
+		      </bean>
+		    </array>
+		</property>
 	</bean>
 
 	

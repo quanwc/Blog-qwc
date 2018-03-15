@@ -21,7 +21,7 @@ public interface BlogService {
 	
 	int saveBlog(Blog blog);
 	
-	int removeBlog(Integer id);
+	int removeBlogBatch(Integer[] ids);
 	
 	int updateBlog(Blog blog);
 	

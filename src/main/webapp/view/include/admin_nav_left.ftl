@@ -6,7 +6,7 @@
 			<dd>
 				<ul>
 					<!-- <li><a href="blogAdd" title="新增博客">新增博客</a></li> -->
-					<li><a href="${ctx}/admin/blogAddView" title="新增博客">新增博客</a></li>
+					<li><a href="${ctx}/admin/blogAddViewFtl" title="新增博客">新增博客</a></li>
 					<li><a href="${ctx}/admin/blogList" title="博客列表">博客列表</a></li>
 				</ul>
 			</dd>

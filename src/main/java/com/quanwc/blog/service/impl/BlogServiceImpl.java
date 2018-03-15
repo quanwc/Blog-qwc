@@ -27,16 +27,27 @@ public class BlogServiceImpl implements BlogService{
 	 */
 	@Override
 	public Blog getBlogById(Integer id) {
-		
-		return null;
+		if (id == null) {
+			return null;
+		}
+		return blogMapper.getBlogById(id);
 	}
 
 	/**
+	 * Mybatis分页插件 - PageHelper
+	 * http://blog.csdn.net/qq_26790807/article/details/62429290
+	 * https://www.cnblogs.com/shanheyongmu/p/5864047.html
+	 * http://blog.csdn.net/qq_32534855/article/details/60755437
 	 * 查询所有博客
 	 */
 	@Override
 	public List<Blog> listBlogs() {
+		
+		//分页处理，显示第1页的3条数据
+//		PageHelper.startPage(1, 3);
 		List<Blog> list = blogMapper.listBlogs();
+//		PageInfo<Blog> pageInfo = new PageInfo<Blog>(list);
+//		System.out.println(pageInfo);
 		return  list;
 	}
 
@@ -55,16 +66,29 @@ public class BlogServiceImpl implements BlogService{
 		return blogMapper.saveBlog(blog);
 	}
 
+	/**
+	 * 批量删除博客
+	 */
 	@Override
-	public int removeBlog(Integer id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int removeBlogBatch(Integer[] ids) {
+		if (ids == null || ids.length ==0) {
+			return -1;
+		}
+		return blogMapper.removeBlogBatch(ids);
 	}
 
+	/**
+	 * 修改博客：
+	 * 	注：当前只可以修改博客内容，标题title等无法修改
+	 */
 	@Override
 	public int updateBlog(Blog blog) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (blog == null) {
+			return -1;
+		}
+		Date date = new Date();
+		blog.setUpdateTimestamp(date);
+		return blogMapper.updateBlog(blog);
 	}
 
 }

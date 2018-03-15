@@ -624,7 +624,7 @@
             {
                 editormd.loadCSS(settings.path + "codemirror/theme/" + settings.editorTheme);
             }
-            
+            debugger;
             this.cm.setOption("theme", theme);
             
             return this;
@@ -637,7 +637,8 @@
          * @returns {editormd}  返回editormd的实例对象
          */
         
-        setCodeMirrorTheme : function (theme) {            
+        setCodeMirrorTheme : function (theme) {  
+        	debugger;
             this.setEditorTheme(theme);
             
             return this;

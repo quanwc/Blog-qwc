@@ -47,12 +47,13 @@
 						<!-- 博客标题 -->
 						<div class="form-group">
 							<label for="title" class="text-warning">标题</label>
-							<input type="text" class="form-control" name="title" placeholder="请输入博客标题" />
+							<input type="text" class="form-control" name="title" value="${blog.title}" placeholder="请输入博客标题" />
 						</div>
 						<!-- 隐藏的md文本 -->
-						<input type="hidden" name="md" id="md"/>
+						<input type="hidden" name="md" value="${blog.md}" id="md"/>
 						<!-- 隐藏的md生成的html文本 -->
-	                    <input type="hidden" name="html" id="html"/>
+	                    <!--<input type="hidden" name="html" value="${blog.html}" id="html"/>-->
+	                    <input type="hidden" name="html" value="${blog.html}" id="html"/>
 						<!-- 提交按钮 -->
 	                    <div class="form-group">
 	                        <label for="add-blog-btn" class="text-warning">提交</label>
@@ -61,7 +62,7 @@
 					</form>
 	                <!-- markdown书写位置 -->
 					<div id="editormd" class="row">
-						<textarea style="display: none;"></textarea>
+						<textarea style="display: none;">${blog.md}</textarea>
 					</div>
 				</div><!-- 博客文章div-结束 -->
 			</div>
@@ -176,7 +177,7 @@
 			// 获取markdown文本和生成HTML
 			alert(editor.getHTML());
 			alert(editor.getMarkdown());
-			$("#blogForm").attr('action','blogAdd').submit();
+			$("#blogForm").attr('action','blogUpdate').submit();
 		})
     });
 </script>
