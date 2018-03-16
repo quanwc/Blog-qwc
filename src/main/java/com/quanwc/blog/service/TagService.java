@@ -19,4 +19,61 @@ public class TagService {
 	
 	@Autowired
 	private TagMapper tagMapper;
+	
+	/**
+	 * 根据id查找标签
+	 * @param id
+	 * @return
+	 */
+	public Tag getTagById(Integer id) {
+		if (id == null) {
+			return null;
+		}
+		return tagMapper.getTagById(id);
+	}
+	
+	/**
+	 * 查询所有标签
+	 * @return
+	 */
+	public List<Tag> listTags() {
+		return tagMapper.listTags();
+	}
+	
+	/**
+	 * 新增标签
+	 * @param tag
+	 * @return
+	 */
+	public int saveTag(Tag tag) {
+		if (tag == null) {
+			return -1;
+		}
+		return tagMapper.saveTag(tag);
+	}
+	
+	/**
+	 * 批量删除博客
+	 * @param ids
+	 * @return
+	 */
+	public int removeTagBatch(List<Integer> ids) {
+		if (ids == null || ids.size() == 0) {
+			return -1;
+		}
+		return tagMapper.removeTagBatch(ids);
+	}
+	
+	/**
+	 * 根据id修改标签名称
+	 * @param tag
+	 * @return
+	 */
+	public int updateTag(Tag tag) {
+		if (tag == null) {
+			return -1;
+		}
+		return tagMapper.updateTag(tag);
+	}
+	
 }

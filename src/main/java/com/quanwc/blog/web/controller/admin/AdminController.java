@@ -1,19 +1,21 @@
 package com.quanwc.blog.web.controller.admin;
 
-import java.net.URLDecoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.quanwc.blog.entity.Blog;
 import com.quanwc.blog.entity.Tag;
 import com.quanwc.blog.service.BlogService;
+import com.quanwc.blog.service.TagService;
 
 @Controller
 @RequestMapping("/admin")
@@ -21,7 +23,8 @@ public class AdminController {
 	
 	@Autowired
 	private BlogService blogService;
-	
+	@Autowired
+	private TagService tagService;
 	
 	/**
 	 * layui页面测试
@@ -141,7 +144,7 @@ public class AdminController {
 	 * 用户列表
 	 * @return
 	 */
-	@RequestMapping("/userList")
+	@RequestMapping(path={"/userList"}, method=RequestMethod.GET)
 	public String userList() {
 		System.out.println("admin userList");
 		return "admin/user_list";
@@ -157,9 +160,20 @@ public class AdminController {
 	 * 显示标签列表
 	 * @return
 	 */
-	public List<Tag> listTags() {
-		
-		return null;
+	@RequestMapping("/tagList")
+	public Model listTags(Model model) {
+		List<Tag> tagList = tagService.listTags();
+		model.addAttribute("tagList", tagList);
+		return model;
+	}
+	
+	/**
+	 * 跳转至标签新增页面
+	 * @return
+	 */
+	@RequestMapping(path={"/saveTagViewFtl"}, method = RequestMethod.GET)
+	public String saveTagViewFtl() {
+		return "tag_add";
 	}
 	
 	/**
@@ -167,7 +181,11 @@ public class AdminController {
 	 * @param tag
 	 * @return
 	 */
+	
 	public String saveTag(Tag tag) {
+		if (tag == null) {
+			
+		}
 		
 		return "";
 	}

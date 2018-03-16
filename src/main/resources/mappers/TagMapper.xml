@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanwc.blog.mapper.TagMapper">
+
+	<!-- 不配置，默认使用MyBatis的二级缓存，则实体类需要实现序列化 -->
+<!-- 	<cache /> 加上该配置，会报错，实体类需要实现序列化才可以 -->
+
+	<resultMap id="baseResultMap" type="com.quanwc.blog.entity.Tag">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+	</resultMap>
+
+	<sql id="Base_Column">
+		`id`, `name`
+	</sql>
+	
+	<!-- 根据id查找标签 -->
+	<select id="getTagById" parameterType="int" resultMap="baseResultMap">
+		select 
+			<include refid="Base_Column" /> 
+		from 
+			`tag`
+		where 
+			id=#{id} 
+	</select>
+	
+	<!-- 查询所有标签 -->
+	<select id="listTags" resultMap="baseResultMap">
+		select 
+			<include refid="Base_Column" />
+		from 
+			`tag`			
+	</select>
+	
+	<!-- 新增标签 -->
+	<insert id="saveTag" parameterType="com.quanwc.blog.entity.Tag">
+		insert into tag(
+			name
+		)values(
+			#{name, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<!-- 批量删除标签 -->
+	<delete id="removeTagBatch" parameterType="java.util.List">
+		delete from `tag`
+		where id in
+		<foreach collection="ids" item="id" separator="," open="(" close=")" >
+			#{id, jdbcType=INTEGER}
+		</foreach>
+	</delete>
+	
+	<!-- 根据id更新博客 -->
+	<update id="updateTag" parameterType="com.quanwc.blog.entity.Tag">
+		update 
+			`tag`
+		set
+			`name` = #{tag.name, jdbcType=VARCHAR}
+		where 
+			`id` = #{tag.id, jdbcType=INTEGER}
+	</update>
+	
+</mapper>
